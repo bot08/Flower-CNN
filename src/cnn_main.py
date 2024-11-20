@@ -5,7 +5,7 @@ from multiprocessing import freeze_support
 import torch
 from torch import nn
 from torch.autograd import Variable
-from torch.utils.data import DataLoader, Sampler
+from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import transforms
 from torch.optim import Adam
@@ -17,7 +17,7 @@ from pathlib import Path
 
 # Hyperparameters.
 num_epochs = 20
-num_classes = 8
+num_classes = 10
 batch_size = 100
 learning_rate = 0.001
 num_of_workers = 5
@@ -120,7 +120,7 @@ optimizer = Adam(model.parameters(), lr=0.0001, weight_decay=0.0001)
 loss_fn = nn.CrossEntropyLoss()
 
 def save_models(epoch):
-    torch.save(model.state_dict(), f"{epoch}-8.model")
+    torch.save(model.state_dict(), f"flowers_2-0_ep{epoch}.model")
     print("Checkpoint saved")
 
 def test():
@@ -193,6 +193,6 @@ def train(num_epoch):
         print(f"Epoch {epoch + 1}, Train Accuracy: {train_acc} , TrainLoss: {train_loss} , Test Accuracy: {test_acc}")
 
 if __name__ == '__main__':
+    print(torch.cuda.is_available())
     freeze_support()
     train(num_epochs)
-    print(torch.cuda.is_available())

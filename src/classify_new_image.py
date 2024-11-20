@@ -8,8 +8,8 @@ from PIL import Image
 from cnn_main import CNNet
 from pathlib import Path
 
-model = CNNet(8) # NUM CLASS
-checkpoint = torch.load(Path('E:\\AI_a\\18-8.model')) # Pretrained model load
+model = CNNet(10) # NUM CLASS
+checkpoint = torch.load(Path('E:\\AI_a\\flowers_2-0_ep16.model'), weights_only=True) # Pretrained model load
 model.load_state_dict(checkpoint)
 trans = transforms.Compose([
     transforms.RandomHorizontalFlip(),
@@ -22,6 +22,11 @@ trans = transforms.Compose([
 model.eval()
 
 image = Image.open(Path('E:\\AI_a\\iris-test1.jpg'))
+#E:\\AI_a\\iris-test1.jpg
+#rose-test.jpg
+#water_lily-test1.jpg
+#dandelion-test1.jpg
+#bell-test1.jpg
 input_loader = DataLoader(dataset=image, batch_size=1, shuffle=False, num_workers=5)
 input_loader = trans(image)
 input_loader = input_loader.view(1, 3, 32,32)
@@ -34,16 +39,20 @@ print(output.data.numpy())
 if (prediction == 0):
     print ('bellflower')
 if (prediction == 1):
-    print ('daisy')
+    print ('carnation')
 if (prediction == 2):
-    print ('dandelion')
+    print ('daisy')
 if (prediction == 3):
-    print ('iris')
+    print ('dandelion')
 if (prediction == 4):
-    print ('rose')
+    print ('iris')
 if (prediction == 5):
-    print ('sunflower')
+    print ('magnolia')
 if (prediction == 6):
-    print ('tulip')
+    print ('rose')
 if (prediction == 7):
+    print ('sunflower')
+if (prediction == 8):
+    print ('tulip')
+if (prediction == 9):
     print ('water_lily')
